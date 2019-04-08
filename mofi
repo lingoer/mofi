@@ -1,0 +1,126 @@
+#! /bin/elixir
+
+entries = [
+  %{
+    :exec => "exo-open --launch WebBrowser",
+    :icon => "web-browser",
+    :name => "Web Browser",
+  },%{
+    :exec => "exo-open --launch FileManager",
+    :icon => "system-file-manager",
+    :name => "File Manager"
+  },%{
+    :name => "Steam",
+    :exec => "/usr/bin/steam",
+    :icon => "steam",
+  },%{
+    :name => "Add/Remove Software",
+    :icon => "system-software-install",
+    :exec => "pamac-manager",
+  },%{
+    :name => "Software Update",
+    :icon => "system-software-update",
+    :exec => "pamac-manager --updates",
+  },%{
+    :exec => "exo-open --launch TerminalEmulator",
+    :icon => "utilities-terminal",
+    :name => "Terminal Emulator"
+  },%{
+    :name => "Audacious",
+    :icon => "audacious",
+    :exec => "audacious"
+  },%{
+    :exec => "exo-open --launch MailReader",
+    :icon => "emblem-mail",
+    :name => "Mail Reader"
+  },%{
+    :name => "Galculator",
+    :exec => "galculator",
+    :icon => "galculator",
+  },%{
+    :name => "Gcolor2",
+    :exec => "gcolor2",
+    :icon => "/usr/share/pixmaps/gcolor2/icon.png",
+  },%{
+    :name => "GNU Image Manipulation Program",
+    :exec => "gimp-2.10",
+    :icon => "gimp",
+  },%{
+    :name => "GParted",
+    :exec => "/usr/bin/gparted",
+    :icon => "gparted",
+  },%{
+    :name => "Widget Factory",
+    :exec => "gtk3-widget-factory",
+    :icon => "gtk3-widget-factory",
+  },%{
+    :name => "Firewall Configuration",
+    :exec => "gufw",
+    :icon => "gufw",
+  },%{
+    :name => "HexChat",
+    :exec => "hexchat --existing",
+    :icon => "hexchat",
+  },%{
+    :icon => "libreoffice-base",
+    :exec => "libreoffice --base",
+    :name => "LibreOffice Base",
+  },%{
+    :icon => "libreoffice-calc",
+    :exec => "libreoffice --calc",
+    :name => "LibreOffice Calc",
+  },%{
+    :icon => "libreoffice-draw",
+    :exec => "libreoffice --draw",
+    :name => "LibreOffice Draw",
+  },%{
+    :icon => "libreoffice-impress",
+    :exec => "libreoffice --impress",
+    :name => "LibreOffice Impress",
+  },%{
+    :icon => "libreoffice-math",
+    :exec => "libreoffice --math",
+    :name => "LibreOffice Math",
+  },%{
+    :icon => "libreoffice-startcenter",
+    :exec => "libreoffice",
+    :name => "LibreOffice",
+  },%{
+    :icon => "libreoffice-writer",
+    :exec => "libreoffice --writer",
+    :name => "LibreOffice Writer",
+  },%{
+    :icon => "ms-office",
+    :exec => "ms-office",
+    :name => "Microsoft Office Online",
+  },%{
+    :name => "NetEase Cloud Music",
+    :icon => "netease-cloud-music",
+    :exec => "netease-cloud-music",
+  },%{
+    :name => "Removable Drives and Media",
+    :exec => "thunar-volman-settings",
+    :icon => "drive-removable-media",
+  },%{
+    :name => "Thunderbird",
+    :exec => "/usr/lib/thunderbird/thunderbird",
+    :icon => "thunderbird",
+  },%{
+    :name => "Open address book",
+    :icon => "thunderbird",
+    :exec => "/usr/lib/thunderbird/thunderbird -addressbook"
+  }]
+
+case System.argv do
+  [] ->
+    entries
+    |> Enum.map(&(<<&1.name::binary,0,"icon",31,&1.icon::binary>>))
+    |> Enum.join("\n")
+    |> IO.puts
+  [input] ->
+    case entries |> Enum.filter(&(&1.name == input)) do
+      [%{:exec => exec}] ->
+        System.cmd("sh", ["-c", "coproc " <> exec])
+      _ -> nil
+    end
+end
