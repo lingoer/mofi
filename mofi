@@ -9,10 +9,10 @@ entries = [
     :exec => "exo-open --launch FileManager",
     :icon => "system-file-manager",
     :name => "File Manager"
-  },${
+  },%{
     :name => "Glade",
     :icon => "glade",
-    :exec => "glade",
+    :exec => "glade"
   },%{
     :name => "Steam",
     :exec => "/usr/bin/steam",
